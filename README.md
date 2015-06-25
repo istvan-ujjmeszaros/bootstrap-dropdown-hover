@@ -1,6 +1,8 @@
 # Bootstrap Dropdown Hover [![Build Status](https://secure.travis-ci.org/istvan-ujjmeszaros/bootstrap-dropdown-hover.png?branch=master)](https://travis-ci.org/istvan-ujjmeszaros/bootstrap-dropdown-hover)
 Bootstrap Dropdown Hover is a simple plugin which opens Bootstrap dropdown menus on mouse hover, the proper way.
 
+## Demo
+
 Check the [official website](http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/) for a demo.
 
 ## Usage
