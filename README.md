@@ -5,6 +5,15 @@ Bootstrap Dropdown Hover is a simple plugin which opens Bootstrap dropdown menus
 
 Check the [official website](http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/) for a demo.
 
+## Why I made it, when there are many solutions already?
+
+I had issues with all the previously existing solutions. The simple CSS ones are not using the `.open` class on the parent element, so there will be no feedback on the dropdown toggle element when the dropdown menu is visible.
+
+The js ones are interfering with clicking on `.dropdown-toggle`, so the dropdown menu shows up on hover, then it is hiding when clicking on the `.dropdown-toggle` element, and moving out the mouse will trigger the dropdown menu to show up again.
+Some of the js solutions are braking iOS compatibility, some plugins are not working on modern desktop browsers which are supporting the touch events.
+
+That's why I made this proper plugin, which prevents all these issues by using only the standard Bootstrap javascript API, without any hack.
+
 ## Usage
 
 1. Download the latest tag from the [releases page](https://github.com/istvan-ujjmeszaros/bootstrap-dropdown-hover/releases) or get it via **bower**:
