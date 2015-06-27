@@ -1,5 +1,5 @@
 /*
- *  Bootstrap Dropdown Hover - v1.0.3
+ *  Bootstrap Dropdown Hover - v1.0.4
  *  Open dropdown menus on mouse hover, the proper way.
  *  http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/
  *
@@ -18,8 +18,8 @@
       },
       _hideTimeoutHandler,
       _hardOpened = false,
-      _mouseDetected = false,
-      _mouseEnterDetected = false;
+      _touchstartDetected = false,
+      _mouseDetected = false;
 
   // The actual plugin constructor
   function BootstrapDropdownHover(element, options) {
@@ -31,19 +31,22 @@
   }
 
   function bindEvents(dropdown) {
-    // we do not want to modify behavior if mouse is not present (touch screens),
-    // so we rely on mousemove to detect the mouse
-    $('body').one('mousemove.dropdownhover', function () {
-      // some touch devices are firing the mousemove event on the body, 
-      // but only after the mouseenter event happens on the dropdown toggle
-      if (!_mouseEnterDetected) {
+    $('body').one('touchstart.dropdownhover', function() {
+      _touchstartDetected = true;
+    });
+
+    $('body').one('mouseenter.dropdownhover', function() {
+      // touchstart fires before mouseenter on touch devices
+      if (!_touchstartDetected) {
         _mouseDetected = true;
       }
     });
 
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).on('mouseenter.dropdownhover', function () {
-      // we need that for proper mouse detection
-      _mouseEnterDetected = true;
+      // seems to be a touch device
+      if(_mouseDetected && !$(this).is(':hover')) {
+        _mouseDetected = false;
+      }
 
       if (!_mouseDetected) {
         return;
@@ -104,6 +107,7 @@
     // seems that bootstrap binds the click handler twice after we reinitializing the plugin after a destroy...
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).off('.dropdown');
     dropdown.element.off('.dropdownhover');
+    $('body').off('.dropdownhover');
   }
 
   BootstrapDropdownHover.prototype = {
