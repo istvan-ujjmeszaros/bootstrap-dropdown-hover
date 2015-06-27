@@ -10,7 +10,8 @@
       },
       _hideTimeoutHandler,
       _hardOpened = false,
-      _mouseDetected = false;
+      _mouseDetected = false,
+      _mouseEnterDetected = false;
 
   // The actual plugin constructor
   function BootstrapDropdownHover(element, options) {
@@ -20,10 +21,26 @@
     this._name = pluginName;
     this.init();
   }
-  
+
   function bindEvents(dropdown) {
+    // we do not want to modify behavior if mouse is not present (touch screens),
+    // so we rely on mousemove to detect the mouse
+    $('body').one('mousemove.dropdownhover', function () {
+      // some touch devices are firing the mousemove event on the body, 
+      // but only after the mouseenter event happens on the dropdown toggle
+      if (!_mouseEnterDetected) {
+        _mouseDetected = true;
+      }
+    });
+
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).on('mouseenter.dropdownhover', function () {
-      _mouseDetected = true;
+      // we need that for proper mouse detection
+      _mouseEnterDetected = true;
+
+      if (!_mouseDetected) {
+        return;
+      }
+
       clearTimeout(_hideTimeoutHandler);
       if (!dropdown.element.parent().hasClass('open')) {
         _hardOpened = false;
@@ -32,6 +49,10 @@
     });
 
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).on('mouseleave.dropdownhover', function () {
+      if (!_mouseDetected) {
+        return;
+      }
+
       if (_hardOpened) {
         return;
       }
@@ -43,29 +64,29 @@
     });
 
     dropdown.element.on('click.dropdownhover', function (e) {
-      // do not modify behavior if mouse is not present (touch screens)
       if (!_mouseDetected) {
         return;
       }
-      if (dropdown.settings.clickBehavior === 'default') {
-        return;
-      }
-      if (dropdown.settings.clickBehavior === 'disable') {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        return;
-      }
-      if (dropdown.settings.clickBehavior === 'sticky') {
-        if (_hardOpened) {
-          _hardOpened = false;
-        }
-        else {
-          _hardOpened = true;
-          if (dropdown.element.parent().hasClass('open')) {
-            e.stopImmediatePropagation();
-            e.preventDefault();
+
+      switch(dropdown.settings.clickBehavior) {
+        case 'default':
+          return;
+        case 'disable':
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          break;
+        case 'sticky':
+          if (_hardOpened) {
+            _hardOpened = false;
           }
-        }
+          else {
+            _hardOpened = true;
+            if (dropdown.element.parent().hasClass('open')) {
+              e.stopImmediatePropagation();
+              e.preventDefault();
+            }
+          }
+          return;
       }
     });
   }
@@ -74,8 +95,9 @@
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).off('.dropdownhover');
     // seems that bootstrap binds the click handler twice after we reinitializing the plugin after a destroy...
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).off('.dropdown');
+    dropdown.element.off('.dropdownhover');
   }
-  
+
   BootstrapDropdownHover.prototype = {
     init: function () {
       this.setClickBehavior(this.settings.clickBehavior);
@@ -128,6 +150,7 @@
           $.data(this, 'plugin_' + pluginName, new BootstrapDropdownHover(this, options));
         }
       });
+
       // If the first parameter is a string and it doesn't start with an underscore or "contains" the `init`-function,
       // treat this as a call to a public method.
     } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
