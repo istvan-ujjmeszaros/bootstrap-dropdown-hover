@@ -68,7 +68,7 @@ $('.navbar [data-toggle="dropdown"]').bootstrapDropdownHover({
 
 When calling `bootstrapDropdownHover()` you can pass a parameters object with zero or more of the following:
 
-- `clickBehavior`, `'sticky'`|`'default'`|`'disable'`, defaults to `sticky`, which means that if we click on an opened dropdown then it will not hide on mouseleave but on a second click only. Can be `default`, which means that means that the dropdown toggles on hover and on click too, or `disable`, which disables dropdown toggling with clicking when mouse is detected (so it will open on hover only)
+- `clickBehavior`, `'sticky'`|`'default'`|`'disable'`|`'link'`, defaults to `sticky`, which means that if we click on an opened dropdown then it will not hide on mouseleave but on a second click only. Can be `default`, which means that means that the dropdown toggles on hover and on click too, `disable`, which disables dropdown toggling with clicking when mouse is detected (so it will open on hover only) or `link` which is like `disable`, but does not prevent the default browser action (i.e. link clicks).
 - `hideTimeout`, integer, defaults to `200`, how much time the hovered dropdown hides after mouseleave (in milliseconds).
 
 ### Methods
