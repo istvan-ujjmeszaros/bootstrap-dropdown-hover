@@ -71,6 +71,12 @@ When calling `bootstrapDropdownHover()` you can pass a parameters object with ze
 - `clickBehavior`, `'sticky'`|`'default'`|`'disable'`, defaults to `sticky`, which means that if we click on an opened dropdown then it will not hide on mouseleave but on a second click only. Can be `default`, which means that means that the dropdown toggles on hover and on click too, or `disable`, which disables dropdown toggling with clicking when mouse is detected (so it will open on hover only)
 - `hideTimeout`, integer, defaults to `200`, how much time the hovered dropdown hides after mouseleave (in milliseconds).
 
+These settings can also be set via HTML5 data attributes on the element itself, e.g. this will
+override both default and explicit constructor settings:
+```html
+<a data-toggle="dropdown" data-click-behavior="default"></a>
+```
+
 ### Methods
 
 You can modify the behavior of the plugin by calling its methods, all of which accept a `value`.
