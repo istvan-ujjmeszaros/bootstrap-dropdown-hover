@@ -56,8 +56,8 @@
       _touchstartDetected = true;
     });
 
-    $body.one('mouseenter.dropdownhover', function() {
-      // touchstart fires before mouseenter on touch devices
+    $body.one('mousemove.dropdownhover', function() {
+      // touchstart fires before mousemove on touch devices
       if (!_touchstartDetected) {
         _mouseDetected = true;
       }
