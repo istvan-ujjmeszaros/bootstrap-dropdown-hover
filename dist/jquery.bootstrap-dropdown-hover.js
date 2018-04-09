@@ -43,7 +43,7 @@
   // The actual plugin constructor
   function BootstrapDropdownHover(element, options) {
     this.element = $(element);
-    this.settings = $.extend({}, defaults, options);
+    this.settings = $.extend({}, defaults, options, this.element.data());
     this._defaults = defaults;
     this._name = pluginName;
     this.init();
