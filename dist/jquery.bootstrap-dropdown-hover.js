@@ -1,12 +1,31 @@
 /*
- *  Bootstrap Dropdown Hover - v1.0.4
+ *  Bootstrap Dropdown Hover - v4.0.0
  *  Open dropdown menus on mouse hover, the proper way.
  *  http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/
  *
  *  Made by István Ujj-Mészáros
  *  Under Apache License v2.0 License
  */
-;(function ($, window, document, undefined) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = function(root, jQuery) {
+      if (jQuery === undefined) {
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        }
+        else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      factory(jQuery);
+      return jQuery;
+    };
+  } else {
+    factory(jQuery);
+  }
+}(function($) {
   var pluginName = 'bootstrapDropdownHover',
       defaults = {
         clickBehavior: 'sticky',  // Click behavior setting:
@@ -31,11 +50,13 @@
   }
 
   function bindEvents(dropdown) {
-    $('body').one('touchstart.dropdownhover', function() {
+    var $body = $('body');
+
+    $body.one('touchstart.dropdownhover', function() {
       _touchstartDetected = true;
     });
 
-    $('body').one('mouseenter.dropdownhover', function() {
+    $body.one('mouseenter.dropdownhover', function() {
       // touchstart fires before mouseenter on touch devices
       if (!_touchstartDetected) {
         _mouseDetected = true;
@@ -53,7 +74,7 @@
       }
 
       clearTimeout(_hideTimeoutHandler);
-      if (!dropdown.element.parent().hasClass('open')) {
+      if (!dropdown.element.parent().is('.open, .show')) {
         _hardOpened = false;
         dropdown.element.dropdown('toggle');
       }
@@ -68,7 +89,7 @@
         return;
       }
       _hideTimeoutHandler = setTimeout(function () {
-        if (dropdown.element.parent().hasClass('open')) {
+        if (dropdown.element.parent().is('.open, .show')) {
           dropdown.element.dropdown('toggle');
         }
       }, dropdown.settings.hideTimeout);
@@ -92,7 +113,7 @@
           }
           else {
             _hardOpened = true;
-            if (dropdown.element.parent().hasClass('open')) {
+            if (dropdown.element.parent().is('.open, .show')) {
               e.stopImmediatePropagation();
               e.preventDefault();
             }
@@ -186,4 +207,4 @@
 
   };
 
-})(jQuery, window, document);
+}));

@@ -1,7 +1,7 @@
 {
   "name": "bootstrap-dropdown-hover",
-  "version": "1.0.4",
-  "homepage": "http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/",
+  "version": "4.0.0",
+  "homepage": "https://www.virtuosoft.eu/code/bootstrap-dropdown-hover/",
   "authors": [
     "István Ujj-Mészáros <styu007@gmail.com>"
   ],
@@ -17,7 +17,7 @@
     "hover",
     "ui"
   ],
-  "license": "Apache License v2.0",
+  "license": "Apache-2.0",
   "moduleType": [
     "node"
   ],
