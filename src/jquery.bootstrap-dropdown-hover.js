@@ -57,7 +57,7 @@
 
     $('.dropdown-toggle, .dropdown-menu', dropdown.element.parent()).on('mouseenter.dropdownhover', function () {
       // seems to be a touch device
-      if(_mouseDetected && !$(this).is(':hover')) {
+      if(_mouseDetected && !$(this.hover)) {
         _mouseDetected = false;
       }
 
