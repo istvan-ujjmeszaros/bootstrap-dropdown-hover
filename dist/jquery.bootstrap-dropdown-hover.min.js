@@ -1,5 +1,5 @@
 /*
- *  Bootstrap Dropdown Hover - v4.1.0
+ *  Bootstrap Dropdown Hover - v4.1.1
  *  Open dropdown menus on mouse hover, the proper way.
  *  http://www.virtuosoft.eu/code/bootstrap-dropdown-hover/
  *

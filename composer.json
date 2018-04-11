@@ -4,7 +4,7 @@
     "keywords": ["bootstrap", "dropdown", "hover", "ui"],
     "description": "Open dropdown menus on mouse hover, the proper way.",
     "homepage": "https://www.virtuosoft.eu/code/bootstrap-dropdown-hover/",
-    "version": "4.1.0",
+    "version": "4.1.1",
     "authors": [
         {
             "name": "István Ujj-Mészáros",
