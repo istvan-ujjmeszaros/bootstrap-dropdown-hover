@@ -31,6 +31,7 @@
         clickBehavior: 'sticky',  // Click behavior setting:
                                   // 'default' means that the dropdown toggles on hover and on click too
                                   // 'disable' disables dropdown toggling with clicking when mouse is detected
+                                  // 'link'    disabled dropdown toggling, but allows link clicks to go through
                                   //  'sticky' means if we click on an opened dropdown then it will not hide on
                                   //           mouseleave but on a second click only
         hideTimeout: 200
@@ -96,7 +97,7 @@
     });
 
     dropdown.element.on('click.dropdownhover', function (e) {
-      if (!_mouseDetected) {
+      if (dropdown.settings.clickBehavior !== 'link' && !_mouseDetected) {
         return;
       }
 
@@ -106,7 +107,10 @@
         case 'disable':
           e.preventDefault();
           e.stopImmediatePropagation();
-          break;
+          return;
+        case 'link':
+          e.stopImmediatePropagation();
+          return;
         case 'sticky':
           if (_hardOpened) {
             _hardOpened = false;
