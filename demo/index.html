@@ -132,6 +132,22 @@
   <h2>Other dropdown type examples</h2>
 
   <div class="bs-example">
+    <div class="dropdown" style="display:inline-block">
+      <a href="https://www.virtuosoft.eu/" data-click-behavior="link" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Linked dropdown
+        <span class="caret"></span>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Separated link</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-example">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
       <button type="button" class="btn btn-secondary">1</button>
       <button type="button" class="btn btn-secondary">2</button>
@@ -468,7 +484,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="bs-example">
     <!-- Large button groups (default and split) -->
     <div class="btn-group">
@@ -708,6 +724,10 @@
 
   $('#setDisable').on('click', function() {
     $('.setdemo [data-toggle="dropdown"]').bootstrapDropdownHover('setClickBehavior', 'disable');
+  });
+
+  $('#setLink').on('click', function() {
+    $('.setdemo [data-toggle="dropdown"]').bootstrapDropdownHover('setClickBehavior', 'link');
   });
 
   $('#set1000').on('click', function() {

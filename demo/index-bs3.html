@@ -80,6 +80,7 @@
               <li><a href="#">Action</a></li>
               <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
               <li><a href="#">Separated link</a></li>
             </ul>
           </div>
@@ -109,6 +110,7 @@
             <button id="setSticky" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setClickBehavior', 'sticky');">setClickBehavior('sticky')</button>
             <button id="setDefault" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setClickBehavior', 'default');">setClickBehavior('default')</button>
             <button id="setDisable" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setClickBehavior', 'disable');">setClickBehavior('disable')</button>
+            <button id="setLink" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setClickBehavior', 'link');">setClickBehavior('link')</button>
             <button id="set1000" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setHideTimeout', 1000);">setHideTimeout(1000)</button>
             <button id="set200" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('setHideTimeout', 200);">setHideTimeout(200)</button>
             <button id="destroy" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="$('.setdemo [data-toggle=&quot;dropdown&quot;]').bootstrapDropdownHover('destroy');">destroy()</button>
@@ -118,6 +120,22 @@
       </div>
 
       <h2>Other dropdown type examples</h2>
+
+      <div class="bs-example">
+        <div class="dropdown">
+          <a href="https://www.virtuosoft.eu/" data-click-behavior="link" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Linked dropdown
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </div>
+      </div>
 
       <div class="bs-example">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -498,7 +516,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="src/jquery.bootstrap-dropdown-hover.js"></script>
+    <script src="../src/jquery.bootstrap-dropdown-hover.js"></script>
 
     <script>
       //$('[data-toggle="dropdown"]').bootstrapDropdownHover();
@@ -521,6 +539,10 @@
 
       $('#setDisable').on('click', function () {
         $('.setdemo [data-toggle="dropdown"]').bootstrapDropdownHover('setClickBehavior', 'disable');
+      });
+
+      $('#setLink').on('click', function () {
+        $('.setdemo [data-toggle="dropdown"]').bootstrapDropdownHover('setClickBehavior', 'link');
       });
 
       $('#set1000').on('click', function () {
