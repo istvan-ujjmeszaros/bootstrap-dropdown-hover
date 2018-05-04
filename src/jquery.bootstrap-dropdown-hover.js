@@ -43,19 +43,19 @@
   }
 
   function getParent($this) {
-    var selector = $this.attr('data-target')
-    , $parent
+    var selector = $this.attr('data-target');
+    var $parent;
 
     if (!selector) {
-      selector = $this.attr('href')
-      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
+      selector = $this.attr('href');
+      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, ''); //strip for ie7
     }
 
-    $parent = selector && $(selector)
+    $parent = selector && $(selector);
 
-    if (!$parent || !$parent.length) $parent = $this.parent()
+    if (!$parent || !$parent.length) {$parent = $this.parent();}
 
-    return $parent
+    return $parent;
   }
 
   function bindEvents(dropdown) {
