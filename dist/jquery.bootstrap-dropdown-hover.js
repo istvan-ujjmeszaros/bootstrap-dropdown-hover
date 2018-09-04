@@ -50,6 +50,22 @@
     this.init();
   }
 
+  function getParent($this) {
+    var selector = $this.attr('data-target');
+    var $parent;
+
+    if (!selector) {
+      selector = $this.attr('href');
+      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, ''); //strip for ie7
+    }
+
+    $parent = selector && $(selector);
+
+    if (!$parent || !$parent.length) {$parent = $this.parent();}
+
+    return $parent;
+  }
+
   function bindEvents(dropdown) {
     var $body = $('body');
 
@@ -64,12 +80,9 @@
       }
     });
 
-    var $dep = dropdown.element.parent();
-    var dept = dropdown.element.data('target');
-    if(debt) {
-      $dep = $dep.add(debt);
-    }
-    $('.dropdown-toggle, .dropdown-menu', $dep).on('mouseenter.dropdownhover', function () {
+    var $parent = getParent(dropdown.element);
+
+    $('.dropdown-toggle, .dropdown-menu', $parent).on('mouseenter.dropdownhover', function () {
       // seems to be a touch device
       if(_mouseDetected && !$(this.hover)) {
         _mouseDetected = false;
@@ -80,13 +93,13 @@
       }
 
       clearTimeout(_hideTimeoutHandler);
-      if (!dropdown.element.parent().is('.open, .show')) {
+      if (!$parent.is('.open, .show')) {
         _hardOpened = false;
         dropdown.element.dropdown('toggle');
       }
     });
 
-    $('.dropdown-toggle, .dropdown-menu', $dep).on('mouseleave.dropdownhover', function () {
+    $('.dropdown-toggle, .dropdown-menu', $parent).on('mouseleave.dropdownhover', function () {
       if (!_mouseDetected) {
         return;
       }
@@ -95,7 +108,7 @@
         return;
       }
       _hideTimeoutHandler = setTimeout(function () {
-        if (dropdown.element.parent().is('.open, .show')) {
+        if ($parent.is('.open, .show')) {
           dropdown.element.dropdown('toggle');
         }
       }, dropdown.settings.hideTimeout);
@@ -122,7 +135,7 @@
           }
           else {
             _hardOpened = true;
-            if (dropdown.element.parent().is('.open, .show')) {
+            if ($parent.is('.open, .show')) {
               e.stopImmediatePropagation();
               e.preventDefault();
             }
@@ -133,14 +146,10 @@
   }
 
   function removeEvents(dropdown) {
-    var $dep = dropdown.element.parent();
-    var dept = dropdown.element.data('target');
-    if(debt) {
-      $dep = $dep.add(debt);
-    }
-    $('.dropdown-toggle, .dropdown-menu', $dep).off('.dropdownhover');
+    var $parent = getParent(dropdown.element);
+    $('.dropdown-toggle, .dropdown-menu', $parent).off('.dropdownhover');
     // seems that bootstrap binds the click handler twice after we reinitializing the plugin after a destroy...
-    $('.dropdown-toggle, .dropdown-menu', $dep).off('.dropdown');
+    $('.dropdown-toggle, .dropdown-menu', $parent).off('.dropdown');
     dropdown.element.off('.dropdownhover');
     $('body').off('.dropdownhover');
   }
