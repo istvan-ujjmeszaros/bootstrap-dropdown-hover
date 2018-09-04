@@ -30,8 +30,7 @@
       },
       _hideTimeoutHandler,
       _hardOpened = false,
-      _touchstartDetected = false,
-      _mouseDetected = false;
+      _isTouchDevice = false;
 
   // The actual plugin constructor
   function BootstrapDropdownHover(element, options) {
@@ -41,6 +40,25 @@
     this._name = pluginName;
     this.init();
   }
+
+  // https://stackoverflow.com/a/4819886/504270
+  function isTouchDevice() {
+    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+    var mq = function(query) {
+      return window.matchMedia(query).matches;
+    };
+
+    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+      return true;
+    }
+
+    // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+    // https://git.io/vznFH
+    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+    return mq(query);
+  }
+
+  _isTouchDevice = isTouchDevice();
 
   function getParent($this) {
     var selector = $this.attr('data-target');
@@ -59,28 +77,10 @@
   }
 
   function bindEvents(dropdown) {
-    var $body = $('body');
-
-    $body.one('touchstart.dropdownhover', function() {
-      _touchstartDetected = true;
-    });
-
-    $body.one('mousemove.dropdownhover', function() {
-      // touchstart fires before mousemove on touch devices
-      if (!_touchstartDetected) {
-        _mouseDetected = true;
-      }
-    });
-
     var $parent = getParent(dropdown.element);
 
     $('.dropdown-toggle, .dropdown-menu', $parent).on('mouseenter.dropdownhover', function () {
-      // seems to be a touch device
-      if(_mouseDetected && !$(this.hover)) {
-        _mouseDetected = false;
-      }
-
-      if (!_mouseDetected) {
+      if (_isTouchDevice) {
         return;
       }
 
@@ -92,7 +92,7 @@
     });
 
     $('.dropdown-toggle, .dropdown-menu', $parent).on('mouseleave.dropdownhover', function () {
-      if (!_mouseDetected) {
+      if (_isTouchDevice) {
         return;
       }
 
@@ -107,7 +107,7 @@
     });
 
     dropdown.element.on('click.dropdownhover', function (e) {
-      if (dropdown.settings.clickBehavior !== 'link' && !_mouseDetected) {
+      if (dropdown.settings.clickBehavior !== 'link' && _isTouchDevice) {
         return;
       }
 
